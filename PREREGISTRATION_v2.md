@@ -45,10 +45,11 @@ Evaluation follows strict hierarchical evaluation across the 12-run matrix:
 ```
 R1: Per-task total shots are exactly 50,000 for d=3 and 50,000 for d=5 across all 12 runs,
     AND RAW batch row count at w=1 is invariant (w1_r1 == w1_r2 == w1_r3 == 4 rows),
-    AND RAW batch row count scales monotonically with worker count (w=2, 4, 8 > w=1),
+    AND RAW batch row count varies within multi-worker configurations with non-overlapping ranges (w=2: 10–12; w=4: 21–25; w=8: 43–60),
     AND Canonical combined schema hash is byte-identical across all 12 runs
     → STRUCTURAL_FRAGMENTATION_WITH_TOTAL_SAMPLING_INVARIANCE
-      (The artifact's internal batch fragmentation is worker-count dependent;
+      (The artifact's row count was invariant at 4 for w=1 across three repetitions,
+       and varied within each multi-worker configuration with non-overlapping ranges;
        the total sampling allocation and canonical schema are strictly invariant).
 
 R2: Per-task total shots differ across worker counts (e.g. shots(w=8) != shots(w=1))

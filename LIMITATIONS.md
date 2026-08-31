@@ -23,3 +23,12 @@ of "independently verified" can follow from this instance.
 
 Scope: one machine, one OS, one CPU, the worker counts listed
 in PREREGISTRATION.md. Nothing outside that scope is claimed.
+
+Statistical resolution limit on distance d=5:
+Due to the chosen low physical noise rate (p = 0.001) and sampling
+budget (50,000 shots per run), observed logical errors for d=5
+are in the single digits (2–12 errors per run, Poisson noise
+dominates). This dataset is strictly designed to evaluate artifact
+and batch row structural properties; it MUST NOT be used to derive
+or assert logical error rates or threshold scaling for d=5.
+

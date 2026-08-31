@@ -64,6 +64,11 @@ R3: RAW batch row count at w=1 varies across repetitions (w1_r1 != w1_r2 != w1_r
 When the reproduction package (`reproduce.py`) is executed on an independent secondary host (Machine B):
 
 ```
+CM-0: requirements.lock cannot be satisfied on the target platform
+      → PACKAGE_PORTABILITY_LIMIT
+        (The declared environment is not installable on the secondary host
+         due to wheel or platform availability; logged, no schema comparison is attempted).
+
 CM-1: Schema Hash Match (Hash(B) == Hash(A))
       AND shots-per-case invariant (50,000 for d=3, 50,000 for d=5)
       → CROSS_MACHINE_INVARIANCE_OF_CANONICAL_SCHEMA

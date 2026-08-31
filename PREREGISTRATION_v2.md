@@ -71,12 +71,12 @@ CM-1: Schema Hash Match (Hash(B) == Hash(A))
          budgets are invariant across differing host environments).
 
 CM-2: Schema Hash Differs (Hash(B) != Hash(A))
-      AND Environment differs in declared dimension (e.g. CPU architecture, SIMD width, OS)
+      AND Environment differs in declared dimension (e.g. library versions [stim, sinter, pymatching, numpy], CPU architecture, SIMD width, OS)
       → REPRODUCTION_BOUNDARY_LOCATED
-        (Discrepancy mapped to specific environmental dimension).
+        (Discrepancy mapped to specific environmental or library dependency dimension).
 
 CM-3: Schema Hash Differs (Hash(B) != Hash(A))
-      AND Environment identical in declared dimensions
+      AND Environment and library versions are identical in declared dimensions
       → UNEXPLAINED_DISCREPANCY
         (Instance execution halts; discrepancy recorded in FAILURES.md).
 ```

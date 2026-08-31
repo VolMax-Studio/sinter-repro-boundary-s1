@@ -13,23 +13,53 @@ REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 PYTHON_BIN = sys.executable
 
 
-def print_env():
+EXPECTED_VERSIONS = {
+    "stim": "1.16.0",
+    "sinter": "1.16.0",
+    "pymatching": "2.4.0",
+    "numpy": "2.5.2"
+}
+
+
+def verify_and_print_env():
     import platform
     print("================================================================================")
-    print("REPRODUCTION ENVIRONMENT")
+    print("REPRODUCTION ENVIRONMENT & DEPENDENCY VERIFICATION")
     print("================================================================================")
     print(f"Python:       {platform.python_version()} ({platform.python_build()})")
     print(f"System:       {platform.system()} {platform.release()} ({platform.machine()})")
     print(f"Processor:    {platform.processor()}")
+
+    mismatches = []
     try:
         import stim, sinter, pymatching, numpy
-        print(f"stim:         {stim.__version__}")
-        print(f"sinter:       {sinter.__version__}")
-        print(f"pymatching:   {pymatching.__version__}")
-        print(f"numpy:        {numpy.__version__}")
+        installed = {
+            "stim": stim.__version__,
+            "sinter": sinter.__version__,
+            "pymatching": pymatching.__version__,
+            "numpy": numpy.__version__
+        }
+        for pkg, expected in EXPECTED_VERSIONS.items():
+            inst = installed.get(pkg, "NOT_INSTALLED")
+            match_status = "OK" if inst == expected else f"MISMATCH (expected {expected})"
+            print(f"{pkg:<14}: {inst:<10} [{match_status}]")
+            if inst != expected:
+                mismatches.append((pkg, expected, inst))
     except ImportError as e:
-        print(f"Warning: missing dependencies ({e}). Run: pip install -r requirements.lock")
+        print(f"\nFATAL: Missing dependencies ({e}).")
+        print("Please install pinned dependencies: pip install -r requirements.lock")
+        sys.exit(1)
+
+    if mismatches:
+        print("\nFATAL: Pinned library version mismatch detected:")
+        for pkg, exp, got in mismatches:
+            print(f"  - {pkg}: expected {exp}, found {got}")
+        print("\nCross-machine reproduction requires exact pinned versions from requirements.lock.")
+        print("Run: pip install -r requirements.lock")
+        sys.exit(1)
+
     print("================================================================================\n")
+
 
 
 def evaluate_decision_rules_v2(manifest_path: str):
@@ -94,7 +124,7 @@ def evaluate_decision_rules_v2(manifest_path: str):
 
 def main():
     os.chdir(REPO_ROOT)
-    print_env()
+    verify_and_print_env()
 
     # Run matrix
     run_script = os.path.join(REPO_ROOT, "src", "run_matrix.py")

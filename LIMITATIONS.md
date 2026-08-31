@@ -32,3 +32,10 @@ dominates). This dataset is strictly designed to evaluate artifact
 and batch row structural properties; it MUST NOT be used to derive
 or assert logical error rates or threshold scaling for d=5.
 
+Interpretation of the CSV 'seconds' Column:
+The raw 'seconds' column in sinter CSV outputs reflects internal
+sub-routine timing rather than total benchmark wall-clock duration.
+This field is not interpreted, has no physical runtime claims attached,
+and does not enter into any decision rule.
+
+

@@ -1,62 +1,72 @@
-[
-  {
-    "repetition": 1,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 46
+{
+  "status": "POST-HOC CONTROL. Added in response to a gate finding after the pre-registered 4x3 matrix was executed. Not covered by PREREGISTRATION_v2.md. Exploratory; carries no verdict.",
+  "batch_configuration": {
+    "start_batch_size": 100,
+    "max_batch_size": 1000,
+    "max_shots_per_task": 50000,
+    "max_errors_per_task": 500
   },
-  {
-    "repetition": 2,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 40
-  },
-  {
-    "repetition": 3,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 36
-  },
-  {
-    "repetition": 4,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 43
-  },
-  {
-    "repetition": 5,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 50
-  },
-  {
-    "repetition": 6,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 45
-  },
-  {
-    "repetition": 7,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 53
-  },
-  {
-    "repetition": 8,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 49
-  },
-  {
-    "repetition": 9,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 40
-  },
-  {
-    "repetition": 10,
-    "rows": 4,
-    "total_shots": 100000,
-    "total_errors": 33
-  }
-]
+  "execution_round": "Round 4 (Persisted series; earlier Round 3 scratch test not preserved)",
+  "results": [
+    {
+      "repetition": 1,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 46
+    },
+    {
+      "repetition": 2,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 40
+    },
+    {
+      "repetition": 3,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 36
+    },
+    {
+      "repetition": 4,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 43
+    },
+    {
+      "repetition": 5,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 50
+    },
+    {
+      "repetition": 6,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 45
+    },
+    {
+      "repetition": 7,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 53
+    },
+    {
+      "repetition": 8,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 49
+    },
+    {
+      "repetition": 9,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 40
+    },
+    {
+      "repetition": 10,
+      "rows": 4,
+      "total_shots": 100000,
+      "total_errors": 33
+    }
+  ]
+}

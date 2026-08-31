@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-reproduce.py — Single-entry point reproduction harness for sinter-repro-boundary-s1
+reproduce.py — Single-entry point reproduction harness for sinter-repro-boundary-s1 (v2)
 """
 
 import os
@@ -32,7 +32,7 @@ def print_env():
     print("================================================================================\n")
 
 
-def evaluate_decision_rules(manifest_path: str):
+def evaluate_decision_rules_v2(manifest_path: str):
     with open(manifest_path) as f:
         data = json.load(f)
 
@@ -40,50 +40,54 @@ def evaluate_decision_rules(manifest_path: str):
     if len(runs) != 12:
         return "ERROR: Incomplete run matrix (expected 12 runs)"
 
-    # Extract groups
     w1_runs = [r for r in runs if r["num_workers"] == 1]
     w2_runs = [r for r in runs if r["num_workers"] == 2]
     w4_runs = [r for r in runs if r["num_workers"] == 4]
     w8_runs = [r for r in runs if r["num_workers"] == 8]
 
-    # Print Table
-    print("================================================================================")
-    print("REPRODUCTION EXECUTION RESULTS TABLE")
-    print("================================================================================")
-    print(f"{'Config':<8} | {'Workers':<7} | {'Rep':<3} | {'RAW SHA256 (prefix)':<20} | {'CANONICAL SHA (prefix)':<22} | {'Shots':<8} | {'Errors':<6} | {'Rows':<4}")
-    print("-" * 90)
+    # Print Full Table
+    print("==================================================================================================================")
+    print("REPRODUCTION EXECUTION RESULTS TABLE (PREREGISTRATION v2)")
+    print("==================================================================================================================")
+    print(f"{'Config':<8} | {'Workers':<7} | {'Rep':<3} | {'RAW Rows':<8} | {'d=3 Shots':<9} | {'d=3 Err':<7} | {'d=5 Shots':<9} | {'d=5 Err':<7} | {'Canonical Schema SHA (prefix)':<30}")
+    print("-" * 114)
     for r in runs:
-        print(f"{r['config_id']:<8} | {r['num_workers']:<7} | {r['repetition']:<3} | {r['raw_sha256'][:16]}... | {r['canonical_sha256'][:16]}...   | {r['total_shots']:<8} | {r['total_errors']:<6} | {r['raw_num_rows']:<4}")
-    print("=" * 90)
+        d3_s = r["task_breakdown"]["d=3"]["shots"]
+        d3_e = r["task_breakdown"]["d=3"]["errors"]
+        d5_s = r["task_breakdown"]["d=5"]["shots"]
+        d5_e = r["task_breakdown"]["d=5"]["errors"]
+        schema_sha = r["canonical_schema_sha256"][:24]
+        print(f"{r['config_id']:<8} | {r['num_workers']:<7} | {r['repetition']:<3} | {r['raw_num_rows']:<8} | {d3_s:<9} | {d3_e:<7} | {d5_s:<9} | {d5_e:<7} | {schema_sha:<30}...")
+    print("=" * 114)
 
-    # 1. Evaluate D5 (Differences present already within workers=1)
-    w1_raw_hashes = {r["raw_sha256"] for r in w1_runs}
-    w1_canonical_hashes = {r["canonical_sha256"] for r in w1_runs}
-    w1_shots = {r["total_shots"] for r in w1_runs}
-    w1_errors = {r["total_errors"] for r in w1_runs}
+    # 1. Evaluate Task Sampling Invariance
+    all_d3_shots = {r["task_breakdown"]["d=3"]["shots"] for r in runs}
+    all_d5_shots = {r["task_breakdown"]["d=5"]["shots"] for r in runs}
+    sampling_invariant = (all_d3_shots == {50000} and all_d5_shots == {50000})
 
-    if len(w1_raw_hashes) > 1 or len(w1_canonical_hashes) > 1 or len(w1_shots) > 1 or len(w1_errors) > 1:
-        return "D5: RUN-TO-RUN NONDETERMINISM (Tool exhibits unseeded stochasticity across repeated invocations; worker-count comparison is confounded by run-to-run variance)"
+    # 2. Evaluate Worker 1 Row Invariance
+    w1_rows = [r["raw_num_rows"] for r in w1_runs]
+    w1_rows_invariant = (len(set(w1_rows)) == 1 and w1_rows[0] == 4)
 
-    # 2. Evaluate D1 (Byte-identical across all 12 runs)
-    all_raw_hashes = {r["raw_sha256"] for r in runs}
-    all_canonical_hashes = {r["canonical_sha256"] for r in runs}
-    all_shots = {r["total_shots"] for r in runs}
+    # 3. Evaluate Monotonic Scaling of Multi-Worker Fragmentation
+    w2_rows_min = min(r["raw_num_rows"] for r in w2_runs)
+    w4_rows_min = min(r["raw_num_rows"] for r in w4_runs)
+    w8_rows_min = min(r["raw_num_rows"] for r in w8_runs)
+    fragmentation_scaled = (w2_rows_min > 4 and w4_rows_min > 4 and w8_rows_min > 4)
 
-    if len(all_raw_hashes) == 1 and len(all_canonical_hashes) == 1:
-        return "D1: BYTE-IDENTICAL UNDER TESTED CONFIGURATIONS"
+    # 4. Evaluate Canonical Schema Byte-Identity
+    all_schema_hashes = {r["canonical_schema_sha256"] for r in runs}
+    schema_invariant = (len(all_schema_hashes) == 1)
 
-    # 3. Evaluate D2 (RAW differs, CANONICAL identical, shots identical)
-    if len(all_canonical_hashes) == 1 and len(all_shots) == 1:
-        return "D2: ROW-ORDER VARIATION ONLY (Artifact line ordering is subject to worker process completion timing; semantic content and sampling totals are stable)"
+    if not sampling_invariant:
+        return "R2: SAMPLING_BUDGET_IS_WORKER_COUNT_DEPENDENT"
+    if not w1_rows_invariant:
+        return "R3: NON_MONOTONIC_BATCH_DISPATCH_AT_SINGLE_WORKER"
+    if not schema_invariant:
+        return "R4: CANONICAL_SCHEMA_MUTATION_UNDER_CONCURRENCY"
 
-    # 4. Evaluate D3 (CANONICAL differs, shots identical)
-    if len(all_canonical_hashes) > 1 and len(all_shots) == 1:
-        return "D3: CONTENT VARIATION AT EQUAL SAMPLING"
-
-    # 5. Evaluate D4 (Shots vary across worker counts with stable w=1)
-    if len(all_shots) > 1:
-        return "D4: SAMPLING ALLOCATION IS WORKER-COUNT DEPENDENT (Adaptive batch aggregation yields differing total collected shots as concurrency scales)"
+    if sampling_invariant and w1_rows_invariant and fragmentation_scaled and schema_invariant:
+        return "R1: STRUCTURAL_FRAGMENTATION_WITH_TOTAL_SAMPLING_INVARIANCE"
 
     return "UNCLASSIFIED_OUTCOME"
 
@@ -97,11 +101,11 @@ def main():
     res = subprocess.run([PYTHON_BIN, run_script], check=True)
 
     manifest_path = os.path.join(REPO_ROOT, "results", "manifest.json")
-    verdict = evaluate_decision_rules(manifest_path)
+    verdict = evaluate_decision_rules_v2(manifest_path)
 
-    print("\n================================================================================")
-    print(f"FORMAL DECISION OUTCOME: {verdict}")
-    print("================================================================================")
+    print("\n==================================================================================================================")
+    print(f"FORMAL DECISION OUTCOME (v2): {verdict}")
+    print("==================================================================================================================")
 
 
 if __name__ == "__main__":

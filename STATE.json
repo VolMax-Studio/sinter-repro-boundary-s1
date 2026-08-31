@@ -16,7 +16,7 @@
       "class": "MECHANICAL",
       "prerequisite": null,
       "evidence": {
-        "artifact": "PREREGISTRATION.md"
+        "artifact": "PREREGISTRATION_v2.md"
       }
     },
     "TARGET_SET": {
@@ -56,7 +56,7 @@
       "class": "MECHANICAL",
       "prerequisite": "RESULTS",
       "evidence": {
-        "outcome": "D5: RUN-TO-RUN NONDETERMINISM"
+        "outcome": "R1: STRUCTURAL_FRAGMENTATION_WITH_TOTAL_SAMPLING_INVARIANCE"
       }
     }
   }

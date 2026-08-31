@@ -1,0 +1,62 @@
+[
+  {
+    "repetition": 1,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 46
+  },
+  {
+    "repetition": 2,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 40
+  },
+  {
+    "repetition": 3,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 36
+  },
+  {
+    "repetition": 4,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 43
+  },
+  {
+    "repetition": 5,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 50
+  },
+  {
+    "repetition": 6,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 45
+  },
+  {
+    "repetition": 7,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 53
+  },
+  {
+    "repetition": 8,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 49
+  },
+  {
+    "repetition": 9,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 40
+  },
+  {
+    "repetition": 10,
+    "rows": 4,
+    "total_shots": 100000,
+    "total_errors": 33
+  }
+]

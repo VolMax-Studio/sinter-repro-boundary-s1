@@ -1,0 +1,5 @@
+     shots,    errors,  discards, seconds,decoder,strong_id,json_metadata,custom_counts
+     50000,        34,         0,   0.007,pymatching,2910a263c3011f5a2fedd1f14d868bc97d8da9b37f09f5df6216b6d9c6048b8b,"{""d"":3,""p"":0.001,""r"":3}",
+     16145,         3,         0,   0.010,pymatching,72637363049bdfb70568e027233d120eddc832e8b3697932de30185fc1769b3b,"{""d"":5,""p"":0.001,""r"":5}",
+     24064,         2,         0,   0.014,pymatching,72637363049bdfb70568e027233d120eddc832e8b3697932de30185fc1769b3b,"{""d"":5,""p"":0.001,""r"":5}",
+      9791,         1,         0,   0.006,pymatching,72637363049bdfb70568e027233d120eddc832e8b3697932de30185fc1769b3b,"{""d"":5,""p"":0.001,""r"":5}",

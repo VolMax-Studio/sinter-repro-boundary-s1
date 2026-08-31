@@ -1,0 +1,51 @@
+{
+  "schema": "p10-state/0.1",
+  "instance": "instances/sinter-repro-boundary-s1",
+  "doctrine_pin": {
+    "repo": "VolMax-Studio/P10-Verification-Method",
+    "commit": "ddd08af",
+    "files": {
+      "TEMPLATE.md": "e64af4e4ae16617e1c9e01afd5b29997d0babe308d47e87649bbe629a5bbb6a7",
+      "DESIGN_PRINCIPLES.md": "8bb3198007ae0ba51dff6bf616ca1f43503cb32b260e408ec228469d4bbff995",
+      "PREPUBLISH_CHECKLIST.md": "603f9052ea64aa9d6f3e09fcfe5391d1e4c76b92a40eebf1f3a5bfdc182f7c00"
+    }
+  },
+  "phases": {
+    "PREREGISTRATION": {
+      "declared": "COMPLETE",
+      "class": "MECHANICAL",
+      "prerequisite": null,
+      "evidence": {
+        "artifact": "PREREGISTRATION.md"
+      }
+    },
+    "TARGET_SET": {
+      "declared": "COMPLETE",
+      "class": "MECHANICAL",
+      "prerequisite": "PREREGISTRATION",
+      "evidence": {
+        "artifact": "PARAMS.md"
+      }
+    },
+    "DATA_MANIFEST": {
+      "declared": "IN_PROGRESS",
+      "class": "MECHANICAL",
+      "prerequisite": "TARGET_SET"
+    },
+    "EXECUTION": {
+      "declared": "NOT_STARTED",
+      "class": "MECHANICAL",
+      "prerequisite": "DATA_MANIFEST"
+    },
+    "RESULTS": {
+      "declared": "NOT_STARTED",
+      "class": "MECHANICAL",
+      "prerequisite": "EXECUTION"
+    },
+    "VERDICT": {
+      "declared": "NOT_STARTED",
+      "class": "MECHANICAL",
+      "prerequisite": "RESULTS"
+    }
+  }
+}

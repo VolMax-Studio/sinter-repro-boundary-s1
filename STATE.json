@@ -28,24 +28,36 @@
       }
     },
     "DATA_MANIFEST": {
-      "declared": "IN_PROGRESS",
+      "declared": "COMPLETE",
       "class": "MECHANICAL",
-      "prerequisite": "TARGET_SET"
+      "prerequisite": "TARGET_SET",
+      "evidence": {
+        "artifact": "results/manifest.json"
+      }
     },
     "EXECUTION": {
-      "declared": "NOT_STARTED",
+      "declared": "COMPLETE",
       "class": "MECHANICAL",
-      "prerequisite": "DATA_MANIFEST"
+      "prerequisite": "DATA_MANIFEST",
+      "evidence": {
+        "artifact": "reproduce.py"
+      }
     },
     "RESULTS": {
-      "declared": "NOT_STARTED",
+      "declared": "COMPLETE",
       "class": "MECHANICAL",
-      "prerequisite": "EXECUTION"
+      "prerequisite": "EXECUTION",
+      "evidence": {
+        "artifact": "results/manifest.json"
+      }
     },
     "VERDICT": {
-      "declared": "NOT_STARTED",
+      "declared": "COMPLETE",
       "class": "MECHANICAL",
-      "prerequisite": "RESULTS"
+      "prerequisite": "RESULTS",
+      "evidence": {
+        "outcome": "D5: RUN-TO-RUN NONDETERMINISM"
+      }
     }
   }
 }

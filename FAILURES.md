@@ -17,3 +17,13 @@
 - **Root Cause (General Class):** Premise-Specification Inversion & Mismatched Decision Logic. Although Step 0 (`PREMISES.md`) explicitly discovered that `sinter` does not expose an external random seed, `PREREGISTRATION.md` retained rule D5 assuming that unseeded stochastic variance across $w=1$ runs constituted an invalidating defect ("Run-to-Run Nondeterminism") rather than the expected behavior of independent pseudo-random sampling.
 - **Measurable Impact:** The harness reported `D5: RUN-TO-RUN NONDETERMINISM`, failing to assert the primary structural finding: that total sampling remained perfectly invariant ($100,000$ shots) while batch fragmentation / row count scaled systematically from $4$ ($w=1$) to $56$ ($w=8$).
 - **Remediation:** Registered this failure. Preserved `PREREGISTRATION.md` as v1 (`PREREGISTRATION_v1_INAPPLICABLE.md`), and formulated `PREREGISTRATION_v2.md` defining decision rules around structural fragmentation, task-level shot invariants, and schema canonicalization.
+
+---
+
+### Failure Entry #003 — Premise Invalidation Gate Bypass Prior to Execution
+- **Date / Event:** 2026-08-31 (P10 Governance Synthesis — Round 5)
+- **Component:** Workflow Sequencing & Step 0 Gate Evaluation.
+- **Root Cause (General Class):** Premise Invalidation Failure. When Step 0 established that a foundational assumption (global seed exposure) was falsified by the tool documentation, execution proceeded without halting to revise and re-freeze the decision rules.
+- **Measurable Impact:** Execution executed under an inapplicable decision rule (v1), requiring post-run invalidation and v2 re-specification.
+- **Remediation:** Formulated the canonical P10 **Premise Invalidation Gate**: Any decision rule must explicitly declare its assumed premises. If Step 0 establishes that a premise does not hold, execution must immediately halt, and the pre-registration must be revised and re-frozen prior to collecting data. A pre-registration whose premise was falsified before execution cannot carry a verdict.
+

@@ -59,6 +59,25 @@ R2: Per-task total shots differ across worker counts (e.g. shots(w=8) != shots(w
 R3: RAW batch row count at w=1 varies across repetitions (w1_r1 != w1_r2 != w1_r3)
     → NON_MONOTONIC_BATCH_DISPATCH_AT_SINGLE_WORKER
 
-R4: Canonical combined schema hash differs across runs
-    → CANONICAL_SCHEMA_MUTATION_UNDER_CONCURRENCY
+## 5. Cross-Machine Replication Outcomes (Pre-Registered)
+
+When the reproduction package (`reproduce.py`) is executed on an independent secondary host (Machine B):
+
 ```
+CM-1: Schema Hash Match (Hash(B) == Hash(A))
+      AND shots-per-case invariant (50,000 for d=3, 50,000 for d=5)
+      → CROSS_MACHINE_INVARIANCE_OF_CANONICAL_SCHEMA
+        (The execution artifact's canonical structure and task sampling
+         budgets are invariant across differing host environments).
+
+CM-2: Schema Hash Differs (Hash(B) != Hash(A))
+      AND Environment differs in declared dimension (e.g. CPU architecture, SIMD width, OS)
+      → REPRODUCTION_BOUNDARY_LOCATED
+        (Discrepancy mapped to specific environmental dimension).
+
+CM-3: Schema Hash Differs (Hash(B) != Hash(A))
+      AND Environment identical in declared dimensions
+      → UNEXPLAINED_DISCREPANCY
+        (Instance execution halts; discrepancy recorded in FAILURES.md).
+```
+

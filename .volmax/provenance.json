@@ -1,0 +1,27 @@
+{
+  "baseline_commit": "ba29621ecaa49cba1c65ba5300fc58da889dfd71",
+  "baseline_tree": "a9e7c9d41229ce42ecaafcab8aeda8dea3a6e1e4",
+  "behavior": {
+    "callbacks": false,
+    "executable": false,
+    "network_calls": false,
+    "telemetry": false
+  },
+  "canonical_url": "https://github.com/VolMax-Studio/sinter-repro-boundary-s1",
+  "default_branch_at_recording": "instances/sinter-repro-boundary-s1",
+  "license": {
+    "detected_spdx": "MIT",
+    "files": [
+      "LICENSE"
+    ],
+    "note": "This provenance record does not grant or alter license rights."
+  },
+  "owner": "VolMax-Studio",
+  "record_id": "urn:volmax:github:VolMax-Studio/sinter-repro-boundary-s1:ba29621ecaa49cba1c65ba5300fc58da889dfd71",
+  "record_type": "volmax.repository-provenance",
+  "record_version": 1,
+  "recorded_at": "2026-10-08T19:41:07+00:00",
+  "repository": "VolMax-Studio/sinter-repro-boundary-s1",
+  "schema": "urn:volmax:provenance:v1",
+  "scope": "Repository identity and baseline commit only; historical tags, releases, evidence, authorship, and existing file bytes are unchanged."
+}
